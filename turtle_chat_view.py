@@ -1,18 +1,50 @@
 #2016-2017 PERSONAL PROJECTS: TurtleChat!
-#WRITE YOUR NAME HERE!
+#noa
 
 #####################################################################################
 #                                   IMPORTS                                         #
 #####################################################################################
 #import the turtle module
+import turtle
 #import the Client class from the turtle_chat_client module
+from turtle_chat_client import Client
 #Finally, from the turtle_chat_widgets module, import two classes: Button and TextInput
+from turtle_chat_widgets import Button, TextInput
 #####################################################################################
 #####################################################################################
 
 #####################################################################################
 #                                   TextBox                                         #
 #####################################################################################
+class TextBox(TextInput):
+    def draw_box(self):
+        self.pos=(-200,-200)
+        turtle.hideturtle()
+        self.writer=turtle.clone()
+        self.writer.penup()
+        self.writer.goto(self.pos)
+        self.writer.pendown()
+        self.writer.goto(self.width,-200)
+        self.writer.goto(self.width,self.height)
+        self.writer.goto(-200,self.height)
+        self.writer.goto(self.pos)
+        self.writer.penup()
+        
+
+      
+        
+    def write_msg(self):
+        self.writer.penup()
+        self.writer.goto(-180,80)
+        self.writer.clear()
+        self.writer.write(self.new_msg)
+
+
+        
+a=TextBox()
+a.draw_box()
+a.write_msg()
+    
 #Make a class called TextBox, which will be a subclass of TextInput.
 #Because TextInput is an abstract class, you must implement its abstract
 #methods.  There are two:
@@ -41,6 +73,9 @@
 #####################################################################################
 #                                  SendButton                                       #
 #####################################################################################
+class SendButton(Button):
+    pass
+    
 #Make a class called SendButton, which will be a subclass of Button.
 #Button is an abstract class with one abstract method: fun.
 #fun gets called whenever the button is clicked.  It's jobs will be to
@@ -65,7 +100,7 @@
 #
 #Read the comments below for hints and directions.
 ##################################################################
-##################################################################
+
 class View:
     _MSG_LOG_LENGTH=5 #Number of messages to retain in view
     _SCREEN_WIDTH=300
@@ -81,12 +116,8 @@ class View:
         #Store the username and partner_name into the instance.
         ###
 
-        ###
-        #Make a new Client object and store it in this instance of View
-        #(i.e. self).  The name of the instance should be my_client
-        ###
+        #Make a new client object and store it in this instance.
 
-        ###
         #Set screen dimensions using turtle.setup
         #You can get help on this function, as with other turtle functions,
         #by typing
@@ -95,16 +126,13 @@ class View:
         #   help(turtle.setup)
         #
         #at the Python shell.
-        ###
 
-        ###
         #This list will store all of the messages.
         #You can add strings to the front of the list using
         #   self.msg_queue.insert(0,a_msg_string)
         #or at the end of the list using
         #   self.msg_queue.append(a_msg_string)
         self.msg_queue=[]
-        ###
 
         ###
         #Create one turtle object for each message to display.
@@ -126,7 +154,7 @@ class View:
         '''
         You should implement this method.  It should call the
         send() method of the Client object stored in this View
-        instance.  It should also update the list of messages,
+        instance.  It should also call update the list of messages,
         self.msg_queue, to include this message.  It should
         clear the textbox text display (hint: use the clear_msg method).
         It should call self.display_msg() to cause the message
@@ -136,8 +164,6 @@ class View:
 
     def get_msg(self):
         return self.textbox.get_msg()
-
-    
 
     def setup_listeners(self):
         '''
@@ -174,9 +200,6 @@ class View:
         You can get the messages you want from self.msg_queue
         '''
         pass
-
-    def get_client(self):
-        return self.my_client
 ##############################################################
 ##############################################################
 
@@ -186,18 +209,19 @@ class View:
 #it once you have a working view, trying to run you chat#
 #view in different ways.                                #
 #########################################################
-if __name__ == '__main__':
-    my_view=View()
-    _WAIT_TIME=200 #Time between check for new message, ms
-    def check() :
-        #msg_in=my_view.my_client.receive()
-        msg_in=my_view.get_client().receive()
-        if not(msg_in is None):
-            if msg_in==Client._END_MSG:
-                print('End message received')
-                sys.exit()
-            else:
-                my_view.msg_received(msg_in)
-        turtle.ontimer(check,_WAIT_TIME) #Check recursively
-    check()
-    turtle.mainloop()
+
+# Noa commented the following lines for her tests with Textbox
+##if __name__ == '__main__':
+##    my_view=View()
+##    _WAIT_TIME=200 #Time between check for new message, ms
+##    def check() :
+##        msg_in=my_view.my_client.receive()
+##        if not(msg_in is None):
+##            if msg_in==my_view.my_client._END_MSG:
+##                print('End message received')
+##                sys.exit()
+##            else:
+##                my_view.msg_received(msg_in)
+##        turtle.ontimer(check,_WAIT_TIME) #Check recursively
+##    check()
+##    turtle.mainloop()
