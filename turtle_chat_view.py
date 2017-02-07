@@ -73,8 +73,13 @@ a.write_msg()
 #####################################################################################
 #                                  SendButton                                       #
 #####################################################################################
+
 class SendButton(Button):
-    pass
+    def __init__(self,view,my_turtle=None,shape=None,pos=(0,0)):
+        super(SendButton,self).__init__(my_turtle,shape,pos)
+        self.view=view
+    def fun(self,x=None,y=None):
+        self.view.send_msg()
     
 #Make a class called SendButton, which will be a subclass of Button.
 #Button is an abstract class with one abstract method: fun.
