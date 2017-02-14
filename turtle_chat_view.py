@@ -38,12 +38,6 @@ class TextBox(TextInput):
         self.writer.goto(-180,80)
         self.writer.clear()
         self.writer.write(self.new_msg)
-
-
-        
-a=TextBox()
-a.draw_box()
-a.write_msg()
     
 #Make a class called TextBox, which will be a subclass of TextInput.
 #Because TextInput is an abstract class, you must implement its abstract
@@ -117,7 +111,6 @@ class View:
         :param username: self.username
         :param partner_name: self.patner_name
         '''
-    def my_client():
         ###
         #Store the username and partner_name into the instance.
         ###
@@ -147,12 +140,14 @@ class View:
         #You can use the clear() and write() methods to erase
         #and write messages for each
         ###
-        self.turtle=turtle
+        self.noa=turtle.clone()
         ###
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
         ###
-
+        self.TextBox=TextBox()
+        self.SendButton=SendButton(self)
+        
         ###
         #Call your setup_listeners() function, if you have one,
         #and any other remaining setup functions you have invented.
@@ -168,7 +163,10 @@ class View:
         It should call self.display_msg() to cause the message
         display to be updated.
         '''
-        pass
+        self.my_client.send(self.TextBox.new_msg)
+        self.msg_queue.append(self.TextBox.new_msg)
+        self.TextBox.clear_msg()
+        self.display_msg() 
 
     def get_msg(self):
         return self.textbox.get_msg()
@@ -184,8 +182,8 @@ class View:
 
         Then, it can call turtle.listen()
         '''
-        pass
-
+        turtle.onkeypress(self.SendButton.fun,'Return')
+        i stopped here !!!!!!!!!!
     def msg_received(self,msg):
         '''
         This method is called when a new message is received.
@@ -218,18 +216,17 @@ class View:
 #view in different ways.                                #
 #########################################################
 
-# Noa commented the following lines for her tests with Textbox
-##if __name__ == '__main__':
-##    my_view=View()
-##    _WAIT_TIME=200 #Time between check for new message, ms
-##    def check() :
-##        msg_in=my_view.my_client.receive()
-##        if not(msg_in is None):
-##            if msg_in==my_view.my_client._END_MSG:
-##                print('End message received')
-##                sys.exit()
-##            else:
-##                my_view.msg_received(msg_in)
-##        turtle.ontimer(check,_WAIT_TIME) #Check recursively
-##    check()
-##    turtle.mainloop()
+if __name__ == '__main__':
+    my_view=View()
+    _WAIT_TIME=200 #Time between check for new message, ms
+    def check() :
+        msg_in=my_view.my_client.receive()
+        if not(msg_in is None):
+            if msg_in==my_view.my_client._END_MSG:
+                print('End message received')
+                sys.exit()
+            else:
+                my_view.msg_received(msg_in)
+        turtle.ontimer(check,_WAIT_TIME) #Check recursively
+    check()
+    turtle.mainloop()
