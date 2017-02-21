@@ -182,8 +182,8 @@ class View:
 
         Then, it can call turtle.listen()
         '''
-        turtle.onkeypress(self.SendButton.fun,'Return')
-        i stopped here !!!!!!!!!!
+        #turtle.onkeypress(self.SendButton.fun,'Return')
+        pass
     def msg_received(self,msg):
         '''
         This method is called when a new message is received.
@@ -193,11 +193,14 @@ class View:
         :param msg: a string containing the message received
                     - this should be displayed on the screen
         '''
+        
         print(msg) #Debug - print message
         show_this_msg=self.partner_name+' says:\r'+ msg
         #Add the message to the queue either using insert (to put at the beginning)
         #or append (to put at the end).
-        #
+        self.msg_queue.append(msg)
+        self.display_msg() 
+        
         #Then, call the display_msg method to update the display
 
     def display_msg(self):
@@ -205,7 +208,9 @@ class View:
         This method should update the messages displayed in the screen.
         You can get the messages you want from self.msg_queue
         '''
-        pass
+        self.noa.clear()
+        self.noa.write(self.msg_queue[-1])
+        
 ##############################################################
 ##############################################################
 
