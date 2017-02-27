@@ -69,7 +69,7 @@ class TextBox(TextInput):
 #####################################################################################
 
 class SendButton(Button):
-    def __init__(self,view,my_turtle=None,shape=None,pos=(0,0)):
+    def __init__(self,view,my_turtle=None,shape=None,pos=(0,-160)):
         super(SendButton,self).__init__(my_turtle,shape,pos)
         self.view=view
     def fun(self,x=None,y=None):
@@ -145,6 +145,7 @@ class View:
         #Create a TextBox instance and a SendButton instance and
         #Store them inside of this instance
         ###
+        turtle.Screen().bgpic("1260817583.gif")
         self.TextBox=TextBox()
         self.SendButton=SendButton(self)
         
